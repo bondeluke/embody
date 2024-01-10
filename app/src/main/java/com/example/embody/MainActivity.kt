@@ -44,18 +44,27 @@ fun CirclesAndStuff(modifier: Modifier = Modifier) {
     ) {
         drawAxes()
 
-        val necklaces = getNecklaces(6).map { it.key }.groupBy { it.elements.size }
-        val numLevels = necklaces.size
-        val increments = 2 * numLevels
-        val padding = (size.height / numLevels) / 5
-        for (increment in (1..<increments step 2)) {
-            drawNecklace(
-                center = Point(center.x, increment * size.height / increments),
-                radius = size.height / (numLevels * 2) - padding,
-                values = listOf(true, false, true, false, true, true)
-            )
+        val necklaces = getNecklaces(5).map { it.key }.groupBy { it.elements.size }
+        val numRows = necklaces.size
+        val padding = (size.height / numRows) / 5
+        for (row in 0..<necklaces.size) {
+            val rowNecklaces = necklaces[row]
+            val numColumns = rowNecklaces!!.size
+            for (col in rowNecklaces.indices) {
+                val x = getRatioBasedOnIndex(col, numColumns)
+                val y = getRatioBasedOnIndex(row, numRows)
+                drawNecklace(
+                    center = Point(x * size.width, y * size.height),
+                    radius = size.height / (numRows * 2) - padding,
+                    values = listOf(true, false, true, false, true, true)
+                )
+            }
         }
     }
+}
+
+fun getRatioBasedOnIndex(index: Int, total: Int): Float {
+    return (index.toFloat() / total + 1f / (total * 2f))
 }
 
 @Preview(showBackground = true)
