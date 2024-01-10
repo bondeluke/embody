@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.embody.graphics.Point
 import com.example.embody.graphics.drawAxes
 import com.example.embody.graphics.drawNecklace
+import com.example.embody.math.necklace.getNecklaces
 import com.example.embody.ui.theme.EmbodyTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,7 +43,7 @@ fun CirclesAndStuff(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-//        val neck = getNecklaces(6)
+        val neck = getNecklaces(6)
         drawAxes()
         drawNecklace(
             Point(center.x, size.height / 4),
