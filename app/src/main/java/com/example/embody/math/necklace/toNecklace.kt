@@ -2,12 +2,12 @@ package com.example.embody.math.necklace
 
 import com.example.embody.math.Element
 
-fun Element.toNecklace(): Necklace {
-    if (set.isEmpty()) return Necklace(emptyList(), order)
+fun Element.getCanonicalIntervalSetOrdering(): List<Int> {
+    if (set.isEmpty()) return emptyList()
 
     val sorted = set.toList().sorted()
     return (0 until sorted.size - 1).map {
         sorted[it + 1] - sorted[it]
-    }.plus(order + sorted.first() - sorted.last())
-        .let { Necklace(canonicalNecklaceOrdering(it), order) }
+    }.plus(seed + sorted.first() - sorted.last())
+        .let { getCanonicalIntervalSetOrdering(seed, it) }
 }

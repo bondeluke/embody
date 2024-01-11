@@ -1,23 +1,40 @@
-package com.example.embody.graphics
+package com.example.embody
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.unit.sp
+import com.example.embody.graphics.Point
+import com.example.embody.math.necklace.Necklace
 import kotlin.math.cos
 import kotlin.math.sin
 
 internal fun DrawScope.drawNecklace(
+    necklace: Necklace,
     center: Point,
     radius: Float,
-    values: List<Boolean>
+    textMeasurer: TextMeasurer,
 ) {
-    val numCircles = values.size
+    val values = getElements(necklace)
 
-    drawCircle(
-        color = Color.Black,
-        radius = 6f,
-        center = Offset(center.x, center.y),
-        alpha = 1f
+    val numCircles = necklace.seed
+
+    val measuredText =
+        textMeasurer.measure(
+            AnnotatedString(necklace.elements.size.toString()),
+            style = TextStyle(fontSize = 20.sp)
+        )
+
+    drawText(
+        textLayoutResult = measuredText,
+        topLeft = Offset(
+            center.x - measuredText.size.width / 2f,
+            center.y - measuredText.size.height / 2f
+        )
     )
 
     for (index in (0 until numCircles)) {
@@ -59,4 +76,20 @@ private fun getPointFromIndex(index: Int, numCircles: Int, center: Point, radius
         x = center.x + cos(angle).toFloat() * radius,
         y = center.y + sin(angle).toFloat() * radius
     )
+}
+
+fun getElements(necklace: Necklace): List<Boolean> {
+    val elements = mutableListOf<Boolean>()
+
+    for (i in 0..<necklace.seed)
+        elements.add(false)
+
+    var counter = 0
+    for (element in necklace.relationships) {
+        counter = counter + necklace.seed - element
+        counter %= necklace.seed
+        elements[counter] = true
+    }
+
+    return elements
 }
