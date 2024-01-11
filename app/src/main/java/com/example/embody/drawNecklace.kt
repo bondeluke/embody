@@ -33,6 +33,21 @@ internal fun DrawScope.drawNecklace(
             style = TextStyle(fontSize = 25.sp)
         )
 
+    val radiusDivisor = when (necklace.seed) {
+        3 -> 3.5f
+        4 -> 3.5f
+        5 -> 3.5f
+        6 -> 4f
+        7 -> 4f
+        8 -> 4f
+        9 -> 4f
+        10 -> 5f
+        11 -> 5f
+        12 -> 5f
+        else -> 4f
+    }
+    val circleRadius = radius / radiusDivisor
+
     drawText(
         textLayoutResult = measuredCenterText,
         topLeft = Offset(
@@ -51,7 +66,7 @@ internal fun DrawScope.drawNecklace(
         textLayoutResult = measuredUnderText,
         topLeft = Offset(
             center.x - measuredUnderText.size.width / 2f,
-            center.y + radius + measuredUnderText.size.height / 1.8f
+            center.y + radius + circleRadius
         )
     )
 
@@ -73,14 +88,14 @@ internal fun DrawScope.drawNecklace(
 
         drawCircle(
             color = getColorFromIndex(index, numCircles),
-            radius = radius / 4,
+            radius = circleRadius,
             center = Offset(x, y),
             alpha = 1.0f
         )
         if (!values[index]) {
             drawCircle(
                 color = Color.White,
-                radius = radius / 4 - 2,
+                radius = circleRadius - 2,
                 center = Offset(x, y),
                 alpha = 1.0f
             )
@@ -112,7 +127,7 @@ fun getElements(necklace: Necklace): List<Boolean> {
 
     var counter = 0
     for (element in necklace.relationships) {
-        counter = counter + necklace.seed - element
+        counter += necklace.seed + element
         counter %= necklace.seed
         elements[counter] = true
     }
@@ -124,6 +139,6 @@ fun getElements(necklace: Necklace): List<Boolean> {
 @Composable
 fun NecklacePreview() {
     EmbodyTheme {
-        Necklaces(8)
+        NecklacesDiagram(6)
     }
 }

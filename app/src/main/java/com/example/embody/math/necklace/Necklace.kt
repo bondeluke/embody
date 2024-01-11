@@ -12,7 +12,7 @@ data class Necklace(
     }
 
     fun toAdditionString(): String {
-        return relationships.reversed().joinToString(" + ")
+        return relationships.joinToString(" + ")
     }
 }
 

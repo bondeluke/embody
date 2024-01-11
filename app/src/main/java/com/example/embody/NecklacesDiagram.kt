@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.rememberTextMeasurer
 
 @Composable
-fun Necklaces(seed: Int, modifier: Modifier = Modifier) {
+fun NecklacesDiagram(seed: Int, modifier: Modifier = Modifier) {
     val textMeasurer = rememberTextMeasurer()
 
     Canvas(

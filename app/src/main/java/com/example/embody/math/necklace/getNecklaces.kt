@@ -8,5 +8,5 @@ fun getNecklaces(seed: Int): List<Necklace> {
         .map { Element(seed, it) }
         .sortedBy { it.set.size }
         .groupBy { it.getCanonicalIntervalSetOrdering() }
-        .map { Necklace(seed, it.key, it.value) }
+        .map { Necklace(seed, it.key.reversed(), it.value) }
 }
