@@ -1,5 +1,6 @@
 package com.example.embody
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -7,9 +8,12 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.embody.graphics.HSV
 import com.example.embody.graphics.Point
 import com.example.embody.math.necklace.Necklace
+import com.example.embody.ui.theme.EmbodyTheme
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -26,7 +30,7 @@ internal fun DrawScope.drawNecklace(
     val measuredCenterText =
         textMeasurer.measure(
             AnnotatedString(necklace.elements.size.toString()),
-            style = TextStyle(fontSize = 15.sp)
+            style = TextStyle(fontSize = 25.sp)
         )
 
     drawText(
@@ -40,14 +44,14 @@ internal fun DrawScope.drawNecklace(
     val measuredUnderText =
         textMeasurer.measure(
             AnnotatedString(necklace.toAdditionString()),
-            style = TextStyle(fontSize = 11.sp)
+            style = TextStyle(fontSize = 13.sp)
         )
 
     drawText(
         textLayoutResult = measuredUnderText,
         topLeft = Offset(
             center.x - measuredUnderText.size.width / 2f,
-            center.y + radius + measuredUnderText.size.height / 1.5f
+            center.y + radius + measuredUnderText.size.height / 1.8f
         )
     )
 
@@ -68,7 +72,7 @@ internal fun DrawScope.drawNecklace(
         val y = p1.y
 
         drawCircle(
-            color = Color.Black,
+            color = getColorFromIndex(index, numCircles),
             radius = radius / 4,
             center = Offset(x, y),
             alpha = 1.0f
@@ -92,6 +96,14 @@ private fun getPointFromIndex(index: Int, numCircles: Int, center: Point, radius
     )
 }
 
+private fun getColorFromIndex(index: Int, numCircles: Int): Color {
+    return HSV(
+        hue = ((numCircles - index).toFloat() * 360f / numCircles.toFloat() + 53) % 360,
+        sat = 0.6f,
+        value = 0.88f
+    ).toRGB().toColor()
+}
+
 fun getElements(necklace: Necklace): List<Boolean> {
     val elements = mutableListOf<Boolean>()
 
@@ -106,4 +118,12 @@ fun getElements(necklace: Necklace): List<Boolean> {
     }
 
     return elements
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NecklacePreview() {
+    EmbodyTheme {
+        Necklaces(8)
+    }
 }
