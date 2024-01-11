@@ -25,7 +25,6 @@ internal fun DrawScope.drawNecklaces(seed: Int, textMeasurer: TextMeasurer) {
     }
 }
 
-
 fun getRatioBasedOnIndex(index: Int, total: Int): Float {
     return (index.toFloat() / total + 1f / (total * 2f))
 }

@@ -1,6 +1,5 @@
 package com.example.embody
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -8,12 +7,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.embody.graphics.HSV
 import com.example.embody.graphics.Point
 import com.example.embody.math.necklace.Necklace
-import com.example.embody.ui.theme.EmbodyTheme
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -129,10 +126,3 @@ fun getElements(necklace: Necklace): List<Boolean> {
     return elements
 }
 
-@Preview(showBackground = true)
-@Composable
-fun NecklacePreview() {
-    EmbodyTheme {
-        NecklacesDiagram(6)
-    }
-}
