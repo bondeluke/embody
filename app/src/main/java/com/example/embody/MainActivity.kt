@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NecklacesDiagram(6)
+                    SingleNecklace(12)
                 }
             }
         }

@@ -29,7 +29,9 @@ fun SingleNecklace(seed: Int, modifier: Modifier = Modifier) {
             necklace = necklace,
             center = Point(size.width / 2, size.height / 2),
             radius = size.width / 3,
-            textMeasurer = textMeasurer
+            textMeasurer = textMeasurer,
+            showCount = false,
+            showAddition = false
         )
     }
 }

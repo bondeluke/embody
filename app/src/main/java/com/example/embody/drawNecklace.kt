@@ -22,41 +22,48 @@ internal fun DrawScope.drawNecklace(
     center: Point,
     radius: Float,
     textMeasurer: TextMeasurer,
+    showCount: Boolean = true,
+    showAddition: Boolean = true
 ) {
     val values = getElements(necklace)
 
     val numCircles = necklace.seed
 
-    val measuredCenterText =
-        textMeasurer.measure(
-            AnnotatedString(necklace.elements.size.toString()),
-            style = TextStyle(fontSize = 25.sp)
-        )
-
     val radiusDivisor = 2.1f + 0.23f * necklace.seed
     val circleRadius = radius / radiusDivisor
 
-    drawText(
-        textLayoutResult = measuredCenterText,
-        topLeft = Offset(
-            center.x - measuredCenterText.size.width / 2f,
-            center.y - measuredCenterText.size.height / 2f
-        )
-    )
+    if (showCount) {
+        val countText =
+            textMeasurer.measure(
+                AnnotatedString(necklace.elements.size.toString()),
+                style = TextStyle(fontSize = 25.sp)
+            )
 
-    val measuredUnderText =
-        textMeasurer.measure(
-            AnnotatedString(necklace.toAdditionString()),
-            style = TextStyle(fontSize = 13.sp)
+        drawText(
+            textLayoutResult = countText,
+            topLeft = Offset(
+                center.x - countText.size.width / 2f,
+                center.y - countText.size.height / 2f
+            )
         )
+    }
 
-    drawText(
-        textLayoutResult = measuredUnderText,
-        topLeft = Offset(
-            center.x - measuredUnderText.size.width / 2f,
-            center.y + radius + circleRadius
+    if (showAddition) {
+        val additionText =
+            textMeasurer.measure(
+                AnnotatedString(necklace.toAdditionString()),
+                style = TextStyle(fontSize = 13.sp)
+            )
+
+        drawText(
+            textLayoutResult = additionText,
+            topLeft = Offset(
+                center.x - additionText.size.width / 2f,
+                center.y + radius + circleRadius
+            )
         )
-    )
+    }
+
 
     for (index in (0 until numCircles)) {
         val p1 = getPointFromIndex(index, numCircles, center, radius)
@@ -66,7 +73,7 @@ internal fun DrawScope.drawNecklace(
             start = Offset(x = p1.x, y = p1.y),
             end = Offset(x = p2.x, y = p2.y),
             color = Color.Black,
-            strokeWidth = 2f
+            strokeWidth = 3f
         )
     }
 
@@ -83,7 +90,7 @@ internal fun DrawScope.drawNecklace(
         )
         drawCircle(
             color = if (values[index]) getColorFromIndex(index, numCircles) else Color.White,
-            radius = circleRadius - 2,
+            radius = circleRadius - 3,
             center = Offset(x, y),
             alpha = 1.0f
         )
