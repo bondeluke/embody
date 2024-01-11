@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.embody.graphics.Point
 import com.example.embody.graphics.drawAxes
 import com.example.embody.graphics.drawNecklace
+import com.example.embody.math.necklace.Necklace
 import com.example.embody.math.necklace.getNecklaces
 import com.example.embody.ui.theme.EmbodyTheme
 
@@ -44,7 +45,8 @@ fun CirclesAndStuff(modifier: Modifier = Modifier) {
     ) {
         drawAxes()
 
-        val necklaces = getNecklaces(5).map { it.key }.groupBy { it.elements.size }
+        val necklaces = getNecklaces(6).map { it.key }.groupBy { it.elements.size }
+//        val all = necklaces.values.flatten()
         val numRows = necklaces.size
         val padding = (size.height / numRows) / 5
         for (row in 0..<necklaces.size) {
@@ -56,11 +58,27 @@ fun CirclesAndStuff(modifier: Modifier = Modifier) {
                 drawNecklace(
                     center = Point(x * size.width, y * size.height),
                     radius = size.height / (numRows * 2) - padding,
-                    values = listOf(true, false, true, false, true, true)
+                    values = getElements(rowNecklaces[col])
                 )
             }
         }
     }
+}
+
+fun getElements(necklace: Necklace): List<Boolean> {
+    val elements = mutableListOf<Boolean>()
+
+    for (i in 0..<necklace.order)
+        elements.add(false)
+
+    var counter = 0
+    for (element in necklace.elements) {
+        counter = counter + necklace.order - element
+        counter %= necklace.order
+        elements[counter] = true
+    }
+
+    return elements
 }
 
 fun getRatioBasedOnIndex(index: Int, total: Int): Float {
