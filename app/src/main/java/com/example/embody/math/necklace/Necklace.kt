@@ -10,5 +10,9 @@ data class Necklace(
     override fun toString(): String {
         return "(${relationships.joinToString()})"
     }
+
+    fun toAdditionString(): String {
+        return relationships.reversed().joinToString(" + ")
+    }
 }
 

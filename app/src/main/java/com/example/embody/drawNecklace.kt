@@ -23,17 +23,31 @@ internal fun DrawScope.drawNecklace(
 
     val numCircles = necklace.seed
 
-    val measuredText =
+    val measuredCenterText =
         textMeasurer.measure(
             AnnotatedString(necklace.elements.size.toString()),
-            style = TextStyle(fontSize = 20.sp)
+            style = TextStyle(fontSize = 15.sp)
         )
 
     drawText(
-        textLayoutResult = measuredText,
+        textLayoutResult = measuredCenterText,
         topLeft = Offset(
-            center.x - measuredText.size.width / 2f,
-            center.y - measuredText.size.height / 2f
+            center.x - measuredCenterText.size.width / 2f,
+            center.y - measuredCenterText.size.height / 2f
+        )
+    )
+
+    val measuredUnderText =
+        textMeasurer.measure(
+            AnnotatedString(necklace.toAdditionString()),
+            style = TextStyle(fontSize = 11.sp)
+        )
+
+    drawText(
+        textLayoutResult = measuredUnderText,
+        topLeft = Offset(
+            center.x - measuredUnderText.size.width / 2f,
+            center.y + radius + measuredUnderText.size.height / 1.5f
         )
     )
 

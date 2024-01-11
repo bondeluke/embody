@@ -17,7 +17,7 @@ internal fun DrawScope.drawNecklaces(seed: Int, textMeasurer: TextMeasurer) {
             val y = getRatioBasedOnIndex(row, numRows)
             drawNecklace(
                 necklace = rowNecklaces[col],
-                center = Point(x * size.width, y * size.height),
+                center = Point(x * size.width, y * size.height - 15),
                 radius = size.height / (numRows * 2) - padding,
                 textMeasurer = textMeasurer
             )
