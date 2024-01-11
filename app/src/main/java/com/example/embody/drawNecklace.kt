@@ -33,19 +33,7 @@ internal fun DrawScope.drawNecklace(
             style = TextStyle(fontSize = 25.sp)
         )
 
-    val radiusDivisor = when (necklace.seed) {
-        3 -> 3.5f
-        4 -> 3.5f
-        5 -> 3.5f
-        6 -> 4f
-        7 -> 4f
-        8 -> 4f
-        9 -> 4f
-        10 -> 5f
-        11 -> 5f
-        12 -> 5f
-        else -> 4f
-    }
+    val radiusDivisor = 2.1f + 0.23f * necklace.seed
     val circleRadius = radius / radiusDivisor
 
     drawText(
@@ -77,7 +65,8 @@ internal fun DrawScope.drawNecklace(
         drawLine(
             start = Offset(x = p1.x, y = p1.y),
             end = Offset(x = p2.x, y = p2.y),
-            color = Color.Black
+            color = Color.Black,
+            strokeWidth = 2f
         )
     }
 
@@ -87,19 +76,17 @@ internal fun DrawScope.drawNecklace(
         val y = p1.y
 
         drawCircle(
-            color = getColorFromIndex(index, numCircles),
+            color = Color.Black,
             radius = circleRadius,
             center = Offset(x, y),
             alpha = 1.0f
         )
-        if (!values[index]) {
-            drawCircle(
-                color = Color.White,
-                radius = circleRadius - 2,
-                center = Offset(x, y),
-                alpha = 1.0f
-            )
-        }
+        drawCircle(
+            color = if (values[index]) getColorFromIndex(index, numCircles) else Color.White,
+            radius = circleRadius - 2,
+            center = Offset(x, y),
+            alpha = 1.0f
+        )
     }
 }
 

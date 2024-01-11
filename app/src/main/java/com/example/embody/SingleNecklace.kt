@@ -5,11 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.embody.graphics.Point
-import com.example.embody.graphics.drawAxes
+import com.example.embody.graphics.RGB
 import com.example.embody.math.necklace.getNecklaces
 import com.example.embody.ui.theme.EmbodyTheme
 
@@ -20,11 +19,11 @@ fun SingleNecklace(seed: Int, modifier: Modifier = Modifier) {
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(RGB(235, 255, 245).toColor())
     ) {
-        drawAxes()
+//        drawAxes()
 
-        val necklace = getNecklaces(seed).random()
+        val necklace = getNecklaces(seed).filter { it.relationships.size == seed }.random()
 
         drawNecklace(
             necklace = necklace,
@@ -39,6 +38,6 @@ fun SingleNecklace(seed: Int, modifier: Modifier = Modifier) {
 @Composable
 fun SingleNecklacePreview() {
     EmbodyTheme {
-        SingleNecklace(6)
+        SingleNecklace(12)
     }
 }
