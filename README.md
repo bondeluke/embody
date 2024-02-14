@@ -1,1 +1,1 @@
-I'm developing Embody, an Android app aimed at exploring and visualizing various ways of experiencing rhythm to inspire users to count and feel rhythm in different ways.
+I'm creating Embody, an Android app focused on visualizing and exploring rhythms.
